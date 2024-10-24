@@ -6,6 +6,7 @@ data "aws_subnet" "selected_subnet" {
   # ☝ access this by: data.aws_subnet.selected_subnet.id
 }
 
+# Ask Terraform to get the latest Amazon Linux AMI with specific name and architecture
 data "aws_ami" "latest_amazon_linux" {
   most_recent = true
   owners = ["amazon"]
