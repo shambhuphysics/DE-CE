@@ -71,6 +71,7 @@ def transform_stream():
     pass
 
 
+# This is the place where data is read from the Kinesis Data Stream and also where you will perform some transformations on each record.
 def poll_shards(kinesis, shard_iterators, kinesis_dest_stream_names):
     while True:
         for shard_itr in shard_iterators:
@@ -122,8 +123,13 @@ def poll_shards(kinesis, shard_iterators, kinesis_dest_stream_names):
                         
                         # execute single PutRecord request
                         response = kinesis.put_record(
+                            StreamName=kinesis_dest_stream_names["USA"]
+                            
                             # Instructions are in the step 2.2.8.
-                            StreamName=kinesis_dest_stream_names["USA"] if user_session["country"] == "USA" else kinesis_dest_stream_names["International"],
+                            if user_session["country"] == "USA"
+                            else kinesis_dest_stream_names[
+                                "International"
+                            ],
                     ### END CODE HERE ###
                             Data=json.dumps(
                                 user_session, default=serialize_datetime
